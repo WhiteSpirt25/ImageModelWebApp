@@ -13,9 +13,10 @@ def index():
     if request.method == 'POST':
         if request.files:
             print('Taking image!')
+            
             image = request.files['pet_image']
             temp_file = os.path.join('static','temp', image.filename)
-            print(temp_file)
+            
             try:
                 os.remove(temp_file)
             except OSError:
