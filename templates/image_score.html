@@ -6,22 +6,27 @@
   
 </head>
 
-<body style="background-color:grey;">
-  
+<body style="background-color:rgb(207, 200, 200);">
+  <center>
   <div class="topnav">
-    <span color=#f3f3f3	font-family=cursive font-size=25px>PetFinder Helper | Не можете оценить фото животного? Не беда! Мы можем!</span>
+    <span>PetFinder Helper | Не можете оценить фото животного? Не беда! Мы можем!</span>
   </div> 
   {% if temp_filename is defined %}
   <div class="container">
-    <img src="{{ url_for( 'static', filename= 'temp/'+temp_filename) }}" max-width=45px max-height=45px />
-    <b><br>{{image_score}}</b> 
+    <br>
+    <img src="{{ url_for( 'static', filename= 'temp/'+temp_filename) }}" width="600" />
+    <b style='color:black'><br>Your pet is <span style="color:green">{{image_score}}</span> out of <span style="color:red">100</span>!</b> 
+    <br> 
+    <p style='color:rgb(212, 150, 34)'>But we know your pet is still the best!</p> 
   </div>
   {% endif %}
-
-  <form action="/" method="POST" enctype='multipart/form-data' encoding='multipart/form-data'>
-    <input type='file' name='pet_image' class='some_image_class'/>
-    <button type="submit" class="btn btn-primary">Upload</button>
-  </form>
+  <div class="rounded">
+    <form action="/" method="POST" enctype='multipart/form-data' encoding='multipart/form-data'>
+      <input type='file' name='pet_image' class='some_image_class'/>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+  </div>
+</center>
 </body>
 
 </html>
