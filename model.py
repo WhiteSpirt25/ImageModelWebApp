@@ -1,20 +1,24 @@
-from os import EX_CANTCREAT
-from tensorflow.keras.models import load_model
-from tensorflow.image import resize
+import mlflow
+import os
+from pawpularitypipeline.preprocessing import resize
+import numpy as np
  
 class MlModel:
 
     def __init__(self) -> None:
         try:
-            self.model = load_model('saved_model.h5')
+            experiment_id = mlflow.get_experiment_by_name('Pawpularity').experiment_id
+            last_run_id = mlflow.list_run_infos(experiment_id, max_results=1)[0].run_id
+            self.model = mlflow.pyfunc.load_model(os.path.join('mlruns','0', last_run_id, 'artifacts', 'model'))
         except:
             self.model = None
             
     def predict(self,image):
         if self.model is not None:
-            image = image.resize(image, [224,224]).numpy()
+            image = resize(image,240,240)
             try:
-                result = self.model.predict(image)
+                result = self.model.predict(np.array([image]))
+                return int(result[0][0])
             except:
                 return "Unable to predict. Check model file or image prerocessing."
         else:
